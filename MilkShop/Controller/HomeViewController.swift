@@ -22,6 +22,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         array.append(firstImage)
         return array
     }()
+    var bannerIdx = 0
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,8 +32,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         bannerCollectionView.delegate = self
         bannerCollectionView.dataSource = self
         bannerCollectionView.collectionViewLayout = setupBannerCollectionView()
-        //bannerCollectionView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200)
-        
+
+        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeBanner), userInfo: nil, repeats: true)
     }
     
     func setupBannerCollectionView() -> UICollectionViewFlowLayout {
@@ -42,6 +43,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return layout
     }
     
+    @objc func changeBanner() {
+        var indexPath: IndexPath
+        bannerIdx += 1
+        if bannerIdx < bannerArray.count {
+            indexPath  = IndexPath(item: bannerIdx, section: 0)
+            bannerCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        } else {
+            bannerIdx = 0
+            indexPath  = IndexPath(item: bannerIdx, section: 0)
+            bannerCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+            changeBanner()
+        }
+    }
 
     /*
     // MARK: - Navigation
