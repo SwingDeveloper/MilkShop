@@ -15,6 +15,6 @@ struct Menu: Decodable {
         let description: String
         let imageURL: String
         let price_m: Int?
-        let price_l: Int?
+        let price_l: Int
     }
 }

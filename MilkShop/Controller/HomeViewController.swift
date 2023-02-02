@@ -38,6 +38,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeBanner), userInfo: nil, repeats: true)
     }
     
+   
     func setupBannerCollectionView() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 300)
@@ -89,15 +90,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "detailSegue" {
+            let cell = sender as! DrinksCollectionViewCell
+            let indexPath = drinksCollectionView.indexPath(for: cell)
+            let destination = segue.destination as! DetailViewController
+            destination.menu = menuArray[indexPath!.row]
+        }
     }
-    */
+    
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bannerCollectionView {
