@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="loQ-M6-dfH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="loQ-M6-dfH">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -33,7 +34,7 @@
                 <navigationController id="0Pd-gz-zzP" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Menu" id="S2N-MZ-tLt"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gpC-Ws-zp3">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -134,7 +135,8 @@
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="25"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="jqo-w0-gsP" kind="show" id="WjD-DR-LeK"/>
+                                    <action selector="goShoppingCart:" destination="JKW-Az-LtK" eventType="touchUpInside" id="fif-MU-4uZ"/>
+                                    <segue destination="jqo-w0-gsP" kind="show" identifier="cartSegue" id="WjD-DR-LeK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -154,9 +156,9 @@
         <!--Detail View Controller-->
         <scene sceneID="8op-w4-0RC">
             <objects>
-                <viewController id="OBV-5J-GEN" customClass="DetailViewController" customModule="MilkShop" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OBV-5J-GEN" customClass="DetailViewController" customModule="MilkShop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fMw-az-kcC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HPz-nx-1an">
@@ -260,7 +262,7 @@
                         <outlet property="descriptionView" destination="EO6-dr-M1M" id="geW-e3-k9V"/>
                         <outlet property="drinksImageView" destination="HPz-nx-1an" id="lTe-Xg-XIn"/>
                         <outlet property="iceTextField" destination="dA7-D8-Pcz" id="YyC-Z6-dpy"/>
-                        <outlet property="nameLabel" destination="3nv-Tf-EyI" id="HYz-Jv-yRj"/>
+                        <outlet property="nameLabel" destination="3nv-Tf-EyI" id="wtV-IB-8VJ"/>
                         <outlet property="priceLabel" destination="TjQ-O8-SsH" id="qZt-TY-IxI"/>
                         <outlet property="sizeTextField" destination="xpJ-8x-1T0" id="RRr-h4-iz3"/>
                         <outlet property="sugarTextField" destination="FK6-Qu-bjV" id="pSh-U7-qS1"/>
@@ -273,18 +275,58 @@
         <!--Shopping Cart View Controller-->
         <scene sceneID="pgN-wW-21n">
             <objects>
-                <viewController id="jqo-w0-gsP" customClass="ShoppingCartViewController" customModule="MilkShop" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CartVC" id="jqo-w0-gsP" customClass="ShoppingCartViewController" customModule="MilkShop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nCM-fA-QCQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1dl-cc-ScE">
+                                <rect key="frame" x="0.0" y="92" width="414" height="804"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="160" id="SO5-JZ-wsx">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="160"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SO5-JZ-wsx" id="EGW-hb-0b7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E4g-eo-Qjz">
+                                                    <rect key="frame" x="20" y="16" width="141" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kV7-zA-VPY">
+                                                    <rect key="frame" x="186" y="70" width="208" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0e0-v2-jNs">
+                                                    <rect key="frame" x="186" y="25" width="175" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="kYR-1V-Pgh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="n0X-cB-fre"/>
+                    <connections>
+                        <outlet property="cartTableView" destination="1dl-cc-ScE" id="NdB-u6-44e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWG-nl-oxC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-900" y="1442"/>
+            <point key="canvasLocation" x="-900.00000000000011" y="1441.7410714285713"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="nDI-Tc-nYi">
@@ -308,7 +350,7 @@
                 <navigationController id="Qg5-0g-x0n" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="JnE-Be-n3v"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="voY-w5-br9">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -323,7 +365,7 @@
     <resources>
         <image name="cart.fill" catalog="system" width="128" height="102"/>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

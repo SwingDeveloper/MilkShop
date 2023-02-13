@@ -29,6 +29,9 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     let sugarPickerView = UIPickerView()
     let icePickerView = UIPickerView()
     let addPickerView = UIPickerView()
+    var detailGroup: Detail?
+    var delegate: Getdata?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,8 +67,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @IBAction func addToCart(_ sender: Any) {
+        detailGroup = Detail(name: nameLabel.text!, price: Int(priceLabel.text!)!, image: drinksImageView.image!, size: sizeTextField.text!, ice: iceTextField.text!, sugar: sugarTextField.text!, add: addTextField.text!)
+        delegate?.passValue(data: detailGroup!)
         dismiss(animated: true)
     }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -120,11 +126,10 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "cartSegue" {
-            let destination = segue.destination as! ShoppingCartViewController
-            destination.menu = menu
-        }
+        
     }
-    
+}
 
+protocol Getdata {
+    func passValue(data: Detail)
 }

@@ -1,5 +1,6 @@
 
 import Foundation
+import UIKit
 
 struct Menu: Decodable {
     
@@ -17,4 +18,14 @@ struct Menu: Decodable {
         let price_m: Int?
         let price_l: Int
     }
+}
+
+struct Detail {
+    let name: String
+    let price: Int
+    let image: UIImage
+    let size: String
+    let ice: String
+    let sugar: String
+    let add: String
 }

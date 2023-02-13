@@ -7,15 +7,28 @@
 
 import UIKit
 
-class ShoppingCartViewController: UIViewController {
+class ShoppingCartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+   
     
+    
+    
+    
+    @IBOutlet weak var cartTableView: UITableView!
+    @IBOutlet weak var nameLabel: UILabel!
+    var detailGroup: Detail?
+    
+    var cart = [Detail]()
     var menu: Menu.Records?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cartTableView.delegate = self
+        cartTableView.dataSource = self
 
-        // Do any additional setup after loading the view.
-        print(menu?.fields.name)
+        print(detailGroup?.name)
+        print(detailGroup?.price)
+        print(detailGroup?.size)
     }
     
 
@@ -29,4 +42,11 @@ class ShoppingCartViewController: UIViewController {
     }
     */
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return cart.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
 }
