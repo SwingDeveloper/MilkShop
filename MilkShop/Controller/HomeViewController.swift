@@ -7,10 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, Getdata {
-    func passValue(data: Detail) {
-       detailGroup = data
-    }
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     @IBOutlet weak var drinksCollectionView: UICollectionView!
@@ -29,6 +26,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var bannerIdx = 0
     var nameLabelString = ""
     var detailGroup: Detail?
+    var cart = [Detail]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,9 +38,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         bannerCollectionView.collectionViewLayout = setupBannerCollectionView()
         fetchData()
        
-
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeBanner), userInfo: nil, repeats: true)
     }
+    
+    
     
    
     func setupBannerCollectionView() -> UICollectionViewFlowLayout {
@@ -83,7 +82,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func goShoppingCart(_ sender: Any) {
-        
     }
     
     @objc func changeBanner() {
@@ -109,12 +107,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let cell = sender as! DrinksCollectionViewCell
             let indexPath = drinksCollectionView.indexPath(for: cell)
             let destination = segue.destination as! DetailViewController
-            destination.delegate = self
             destination.menu = menuArray[indexPath!.row]
-        } else if segue.identifier == "cartSegue" {
-            let destination = segue.destination as! ShoppingCartViewController
-            destination.detailGroup = detailGroup
-        }
+        } 
     }
     
 

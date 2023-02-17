@@ -20,6 +20,25 @@ struct Menu: Decodable {
     }
 }
 
+struct ShoppingCart: Codable {
+    
+    let records: [Records]
+    
+    struct Records: Codable {
+        let fields: Fields
+    }
+    struct Fields: Codable {
+        let name: String
+        let size: String
+        let ice: String
+        let sugar: String
+        let imageURL: String
+        let add: String
+        let price: Int
+    }
+}
+
+
 struct Detail {
     let name: String
     let price: Int

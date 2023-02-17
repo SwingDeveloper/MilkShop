@@ -24,13 +24,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     let size = ["大杯","中杯"]
     let sugar = ["無糖","微糖","半糖","少糖","正常甜"]
     let ice = ["去冰","微冰","少冰","正常冰","溫熱"]
-    let add = ["不加料", "珍珠", "布丁", "仙草凍", "綠茶凍"]
+    let add = ["加珍珠", "加布丁", "加仙草凍", "加綠茶凍","不加料"]
     let sizePickerView = UIPickerView()
     let sugarPickerView = UIPickerView()
     let icePickerView = UIPickerView()
     let addPickerView = UIPickerView()
-    var detailGroup: Detail?
-    var delegate: Getdata?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,9 +64,33 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    func postData() {
+        let urlString = "https://api.airtable.com/v0/appfieMsUwTxzERom/ShoppingCart"
+        if let url = URL(string: urlString) {
+            var request = URLRequest(url: url)
+            request.setValue("Bearer keykgXb1GRqbLNtpC", forHTTPHeaderField: "Authorization")
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let encoder = JSONEncoder()
+            let drinkDetail = ShoppingCart(records: [.init(fields: .init(name: self.nameLabel.text!, size: self.sizeTextField.text!, ice: self.iceTextField.text!, sugar: self.sugarTextField.text!, imageURL: self.menu.fields.imageURL, add: self.addTextField.text!, price: Int(self.priceLabel.text!)!))])
+            if let data = try? encoder.encode(drinkDetail) {
+                URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
+                    if let data = data {
+                        do {
+                            let decoder = JSONDecoder()
+                            let response = try? decoder.decode(ShoppingCart.self, from: data)
+                            print(response)
+                        } catch  {
+                            print(error)
+                        }
+                    }
+                }.resume()
+            }
+        }
+    }
+    
     @IBAction func addToCart(_ sender: Any) {
-        detailGroup = Detail(name: nameLabel.text!, price: Int(priceLabel.text!)!, image: drinksImageView.image!, size: sizeTextField.text!, ice: iceTextField.text!, sugar: sugarTextField.text!, add: addTextField.text!)
-        delegate?.passValue(data: detailGroup!)
+        postData()
         dismiss(animated: true)
     }
     
@@ -130,6 +152,4 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
 }
 
-protocol Getdata {
-    func passValue(data: Detail)
-}
+

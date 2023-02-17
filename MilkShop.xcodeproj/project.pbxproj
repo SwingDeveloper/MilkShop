@@ -18,6 +18,7 @@
 		7983D04A2987A26D00D627EE /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983D0492987A26D00D627EE /* Menu.swift */; };
 		7983D04E2987A56200D627EE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983D04D2987A56200D627EE /* HomeViewController.swift */; };
 		7983D0502987B40A00D627EE /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7983D04F2987B40A00D627EE /* BannerCollectionViewCell.swift */; };
+		79B6C7FC299B643A00F2C6F3 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B6C7FB299B643A00F2C6F3 /* CartTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		7983D0492987A26D00D627EE /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		7983D04D2987A56200D627EE /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7983D04F2987B40A00D627EE /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
+		79B6C7FB299B643A00F2C6F3 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				7983D04F2987B40A00D627EE /* BannerCollectionViewCell.swift */,
 				79803E39298908DC004BA98C /* DrinksCollectionViewCell.swift */,
+				79B6C7FB299B643A00F2C6F3 /* CartTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				79833A8A298BB6A200E4303C /* ShoppingCartViewController.swift in Sources */,
 				7983D0352987A22000D627EE /* AppDelegate.swift in Sources */,
 				7983D04A2987A26D00D627EE /* Menu.swift in Sources */,
+				79B6C7FC299B643A00F2C6F3 /* CartTableViewCell.swift in Sources */,
 				7983D0372987A22000D627EE /* SceneDelegate.swift in Sources */,
 				7983D0502987B40A00D627EE /* BannerCollectionViewCell.swift in Sources */,
 				7983D04E2987A56200D627EE /* HomeViewController.swift in Sources */,
