@@ -11,7 +11,7 @@ class ShoppingCartViewController: UIViewController, UITableViewDelegate, UITable
    
     
     @IBOutlet weak var cartTableView: UITableView!
-    var cart = [ShoppingCart.Records]()
+    var cart = [ShoppingCartResponse.Records]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class ShoppingCartViewController: UIViewController, UITableViewDelegate, UITable
                 let decoder = JSONDecoder()
                 if let data = data {
                     do {
-                        let shoppingCart = try decoder.decode(ShoppingCart.self, from: data)
+                        let shoppingCart = try decoder.decode(ShoppingCartResponse.self, from: data)
                         DispatchQueue.main.async {
                             self.cart = shoppingCart.records
                             self.cartTableView.reloadData()
@@ -58,8 +58,8 @@ class ShoppingCartViewController: UIViewController, UITableViewDelegate, UITable
                     do {
                         let shoppingCart = try decoder.decode(ShoppingCart.self, from: data)
                         DispatchQueue.main.async {
-                            self.cart = shoppingCart.records
-                            self.cartTableView.reloadData()
+//                            self.cart = shoppingCart.records
+//                            self.cartTableView.reloadData()
                         }
                     } catch {
                         print(error)
@@ -67,6 +67,36 @@ class ShoppingCartViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }.resume()
         }
+    }
+    
+    func showInputAlert() {
+        let alertController = UIAlertController(
+            title: "訂購人資訊",
+            message: "請填寫完整訂購人資訊",
+            preferredStyle: .alert
+        )
+        let alertStrings = ["訂購人姓名","訂購人電話","外送地址"]
+        for alertString in alertStrings {
+            alertController.addTextField { textField in
+                textField.placeholder = "\(alertString)"
+            }
+        }
+        alertController.addAction(
+            UIAlertAction(title: "Submit", style: .default) { _ in
+                if let textField = alertController.textFields?.first {
+                    // Handle the submitted text
+                    print("Submitted text: \(textField.text ?? "")")
+                }
+            }
+        )
+
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        present(alertController, animated: true)
+    }
+
+    @IBAction func sendOrder(_ sender: Any) {
+        showInputAlert()
     }
     
     /*
@@ -78,11 +108,31 @@ class ShoppingCartViewController: UIViewController, UITableViewDelegate, UITable
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            cartTableView.deleteRows(at: [indexPath], with: .automatic)
-//        }
-//        cartTableView.reloadData()
+        if editingStyle == .delete {
+            let orderItem = cart[indexPath.row]
+            MenuController.shared.deleteOrderItem(orderID: orderItem.id) { result in
+                switch result {
+                case .success(let message):
+                    print(message)
+                   
+                case .failure(let error):
+                    print(error)
+                    print(orderItem.id)
+                    DispatchQueue.main.async {
+                        self.cart.remove(at: indexPath.row)
+                        self.cartTableView.deleteRows(at: [indexPath], with: .automatic)
+                        self.cartTableView.reloadData()
+                    }
+                }
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

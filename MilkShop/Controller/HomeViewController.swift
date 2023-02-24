@@ -36,7 +36,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         bannerCollectionView.delegate = self
         bannerCollectionView.dataSource = self
         bannerCollectionView.collectionViewLayout = setupBannerCollectionView()
-        fetchData()
+        //fetchData()
+        MenuController.shared.fetchMenuItem { result in
+            switch result {
+            case .success(let menuResponse):
+                self.menuArray = menuResponse.records
+                DispatchQueue.main.async {
+                    self.drinksCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
        
         Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeBanner), userInfo: nil, repeats: true)
     }
@@ -80,6 +91,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }.resume()
         }
     }
+    
+    
     
     @IBAction func goShoppingCart(_ sender: Any) {
     }

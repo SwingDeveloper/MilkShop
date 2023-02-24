@@ -64,33 +64,18 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
-    func postData() {
-        let urlString = "https://api.airtable.com/v0/appfieMsUwTxzERom/ShoppingCart"
-        if let url = URL(string: urlString) {
-            var request = URLRequest(url: url)
-            request.setValue("Bearer keykgXb1GRqbLNtpC", forHTTPHeaderField: "Authorization")
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            let encoder = JSONEncoder()
-            let drinkDetail = ShoppingCart(records: [.init(fields: .init(name: self.nameLabel.text!, size: self.sizeTextField.text!, ice: self.iceTextField.text!, sugar: self.sugarTextField.text!, imageURL: self.menu.fields.imageURL, add: self.addTextField.text!, price: Int(self.priceLabel.text!)!))])
-            if let data = try? encoder.encode(drinkDetail) {
-                URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
-                    if let data = data {
-                        do {
-                            let decoder = JSONDecoder()
-                            let response = try? decoder.decode(ShoppingCart.self, from: data)
-                            print(response)
-                        } catch  {
-                            print(error)
-                        }
-                    }
-                }.resume()
-            }
-        }
-    }
+    
     
     @IBAction func addToCart(_ sender: Any) {
-        postData()
+        let drinkDetail = ShoppingCart(records: [.init(fields: .init(name: self.nameLabel.text!, size: self.sizeTextField.text!, ice: self.iceTextField.text!, sugar: self.sugarTextField.text!, imageURL: self.menu.fields.imageURL, add: self.addTextField.text!, price: Int(self.priceLabel.text!)!))])
+        MenuController.shared.uploadOrder(order: drinkDetail) { result in
+            switch result {
+            case .success(let response):
+                print(response)
+            case .failure(let error):
+                print(error)
+            }
+        }
         dismiss(animated: true)
     }
     

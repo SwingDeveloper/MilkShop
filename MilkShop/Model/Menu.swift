@@ -38,6 +38,27 @@ struct ShoppingCart: Codable {
     }
 }
 
+struct ShoppingCartResponse: Decodable {
+    
+    let records: [Records]
+    
+    struct Records: Decodable {
+        let fields: Fields
+        let id: String
+    }
+    struct Fields: Decodable {
+        let name: String
+        let size: String
+        let ice: String
+        let sugar: String
+        let imageURL: String
+        let add: String
+        let price: Int
+    }
+}
+
+
+
 
 struct Detail {
     let name: String
